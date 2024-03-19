@@ -1,10 +1,14 @@
 package br.edu.unichristus.backend.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.unichristus.backend.data.User;
 import br.edu.unichristus.backend.repository.UserRepository;
+
+
 
 @Service
 public class UserService {
@@ -24,8 +28,11 @@ public class UserService {
 		// recebe e exibe o resultado
 		var userSaved = repository.save(user);
 		
-		return userSaved;
-		
+		return userSaved;		
 	}
+	public List<User> listAll(){
+		return repository.findAll();
+	}
+	
 
 }
