@@ -1,6 +1,9 @@
 package br.edu.unichristus.backend.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +19,13 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-	@PostMapping(consumes = ParamRe )
+	@PostMapping
 	public User save(@RequestBody User user ) {
-		
+		return service.save(user);
 	} 
-
+	
+	@GetMapping
+	public List<User> listAll(){
+		return service.listAll();
+	}
 }
