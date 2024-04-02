@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.unichristus.backend.data.User;
@@ -33,7 +34,7 @@ public class UserController {
 		return service.save(user);
 	}
 	
-	@GetMapping
+	@GetMapping("/all")
 	public List<User> listAll(){
 		return service.listAll();
 	}
@@ -42,5 +43,11 @@ public class UserController {
 	public void delete(@PathVariable("id") Long id) {
 		service.delete(id);
 	}
+	
+	@GetMapping
+	public User findById(@RequestParam(required = true) Long id) {
+		return service.findById(id);
+	}
+	
 
 }
