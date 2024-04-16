@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import br.edu.unichristus.backend.data.dto.UserDTO;
 import br.edu.unichristus.backend.data.dto.UserLowDTO;
 import br.edu.unichristus.backend.data.model.User;
 import br.edu.unichristus.backend.dozer.DozerConverter;
@@ -19,8 +20,10 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 
-	public User save(User user) {
-		if(user.getName().length() > 150) {
+	public UserLowDTO save(UserDTO userDTO) {
+		var userModel = DozerConverter.parseObject(userDTO, User.class);
+		
+		if(userModel.getName().length() > 150) {
 			//System.out.println("Limite de caracteres excedido!");
 			throw new CommonsException(
 					HttpStatus.BAD_REQUEST,
@@ -28,7 +31,7 @@ public class UserService {
 					"Limite de Carateres excedido"
 					);
 		}
-		var userFind = repository.findByLogin(user.getLogin());
+		var userFind = repository.findByLogin(userModel.getLogin());
 		if(!userFind.isEmpty()) {
 			throw new CommonsException(
 					HttpStatus.CONFLICT,
@@ -37,9 +40,11 @@ public class UserService {
 					);
 		}
 		
-		var userSaved = repository.save(user);
+		var userSaved = repository.save(userModel);
 		
-		return userSaved;
+		var userLowDTO = DozerConverter.parseObject(userSaved, UserLowDTO.class);
+		
+		return userLowDTO;
 	}	
 	
 	
