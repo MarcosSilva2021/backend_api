@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.unichristus.backend.data.dto.UserLowDTO;
 import br.edu.unichristus.backend.data.model.User;
 import br.edu.unichristus.backend.service.UserService;
 import java.util.List;
@@ -35,7 +36,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/all")
-	public List<User> listAll(){
+	public List<UserLowDTO> listAll(){
 		return service.listAll();
 	}
 	
