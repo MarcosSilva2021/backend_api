@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import br.edu.unichristus.backend.data.User;
+import br.edu.unichristus.backend.data.dto.UserLowDTO;
+import br.edu.unichristus.backend.data.model.User;
+import br.edu.unichristus.backend.dozer.DozerConverter;
 import br.edu.unichristus.backend.exception.CommonsException;
 import br.edu.unichristus.backend.repository.UserRepository;
 
@@ -41,8 +43,11 @@ public class UserService {
 	}	
 	
 	
-	public List<User> listAll(){
-		return repository.findAll();
+	public List<UserLowDTO> listAll(){
+		var listUserLow = repository.findAll();
+		var listConverd = DozerConverter.parseListObjects(listUserLow, UserLowDTO.class);
+		
+		return listConverd;
 	}
 	
 	public void delete(Long id) {
